@@ -6,9 +6,13 @@
     justify-content: center;
     flex-direction: column;
 }
+.user{
+    text-align:center; 
+    padding:10px 0;
+}
 
 .button{
-    width: 80%;
+    width: 70%;
     max-width: 300px;
     padding: 15px 10px;
     border-radius: 8px;
@@ -16,7 +20,7 @@
     border: 2px solid orange;
     text-decoration: none;
     text-align: center;
-    font: 1.2rem bold "Fira Sans", sans-serif;
+    font: 1.1rem bold;
     margin-top: 100px;
 }
 .button:hover{

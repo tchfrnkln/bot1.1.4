@@ -11,9 +11,9 @@ export const LoginUser = () => {
   return (
     <div className='root'>
       <Image alt='cart' src={require("../../../assets/image/cart.svg")} height={100}/>
-      <h2 style={{textAlign:"center"}}>Hello {initData?.user?.firstName}</h2>
+      <h2 className='user'>{initData?.user?.username}</h2>
 
-      <Link className='button' href="./mine-cstz">Lorem</Link>
+      <Link className='button' href="./mine-cstz">Start Mining CSTZ</Link>
     </div>
   )
 }
