@@ -15,7 +15,7 @@ export const LoginUser = () => {
   // .set('name', 'Franklin')
   // .then(() => console.log('Item saved'));
 
-  mainButton.hide();
+  // mainButton.hide();
 
 
 
