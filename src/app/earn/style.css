@@ -14,3 +14,13 @@
   #box1 {
     z-index: 9999;
   }
+
+.farmButton{
+    width: 250px;
+    background: darkgray;
+    border-radius: 12px;
+    text-align: center;
+    color: black;
+    padding: 20px;
+    
+}

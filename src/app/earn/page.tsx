@@ -2,23 +2,23 @@
 import Navigation from '@/components/NavBar/Navigation'
 import React, { useEffect, useState } from 'react'
 import "./style.css"
-import { Button } from '@telegram-apps/telegram-ui'
+import { Button, ButtonCell } from '@telegram-apps/telegram-ui'
 import { gsap, Back, Bounce } from "gsap"
+import CountdownTimer from '@/components/countdown/Timer'
 
 const Page = () => {
   const value = 5115
 
+  const [farmButton, setfarmButton] = useState(true)
+
   const animateBoxes = () => {
     const tl = gsap.timeline();
-    const fillRelative = "hsl(+=360%, +=0%, +=0%)";
     const time = 3;
 
-    // Ensure the boxes are visible before animating
     gsap.set("#box1, #box2, #box3", { autoAlpha: 1 });
 
     tl.add('start');
 
-    // Box 1 animations
     tl.to('#box1', {
       duration: time,
       rotation: '85',
@@ -26,15 +26,6 @@ const Page = () => {
       ease: "none"
     }, 'start');
 
-    // tl.from('#box1', {
-    //   duration: time,
-    //   y: '-200px',
-    //   ease: Bounce.easeOut
-    // }, 'start');
-
-    // tl.add('first');
-
-    // Box 2 animations
     tl.to('#box2', {
       duration: time,
       rotation: '-80',
@@ -42,15 +33,6 @@ const Page = () => {
       ease: "none"
     }, 'first');
 
-    // tl.from('#box2', {
-    //   duration: time,
-    //   y: '-200px',
-    //   ease: Bounce.easeOut
-    // }, 'first');
-
-    // tl.add('second');
-
-    // // Box 3 animations
     tl.to('#box3', {
       duration: 0.5,
       rotation: '-87',
@@ -58,15 +40,6 @@ const Page = () => {
       ease: "none"
     }, 'second');
 
-    // tl.from('#box3', {
-    //   duration: 0.5,
-    //   y: '-200px',
-    //   ease: Back.easeOut.config(1)
-    // }, 'second');
-
-    // tl.add('last');
-
-    // // Small yoyo animations for boxes 1 and 2
     tl.to('#box1', {
       duration: 0.1,
       y: '1px',
@@ -80,29 +53,21 @@ const Page = () => {
       yoyo: true,
       repeat: 1
     }, 'last-=0.25');
-
-    // tl.add('color');
-
-    // // Color animation for all boxes
-    // tl.to('.box', {
-    //   duration: 20,
-    //   fill: fillRelative,
-    //   repeat: -1
-    // }, 'color');
   };
 
   useEffect(() => {
-    // Initial animation
     animateBoxes();
-
-    // Reanimate every 10 seconds
     const interval = setInterval(() => {
       animateBoxes();
     }, 10000);
-
-    // Cleanup interval on component unmount
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
+
+  const startFarmingCSTZ = () =>{
+    setfarmButton(!farmButton)
+  }
+
+  const specificEndTime = new Date().getTime() + 7 * 60 * 60 * 1000;
 
   return (
     <div className='contentFrame'>
@@ -115,7 +80,8 @@ const Page = () => {
       </svg>
       <h1>{value.toLocaleString()}</h1>
 
-      <Button color='black'>Start Farming</Button>
+
+      {farmButton ? <Button color='black' onClick={()=> startFarmingCSTZ()}>Start Farming</Button> : <div className='farmButton'><CountdownTimer endTime={specificEndTime}/></div>}
 
       <Navigation/>
     </div>
