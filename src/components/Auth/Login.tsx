@@ -24,7 +24,7 @@ export const LoginUser = () => {
       <Image alt='cart' src={Cart} height={100}/>
       <h2 className='user'>{initData?.user?.username}</h2>
 
-      <Link className='button' href="./mine-cstz">Start Mining CSTZ</Link>
+      <Link className='button' href="./earn">Start Mining CSTZ</Link>
     </div>
   )
 }

@@ -4,3 +4,13 @@
     align-items: center;
     flex-direction: column;
 }
+
+#cart {
+    height: 50vh;
+    max-width: 250px;
+    margin: 0 10px;
+  }
+  
+  #box1 {
+    z-index: 9999;
+  }
