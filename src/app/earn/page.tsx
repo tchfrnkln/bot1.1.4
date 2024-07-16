@@ -7,6 +7,11 @@ import { gsap, Back, Bounce } from "gsap"
 import CountdownTimer from '@/components/countdown/Timer'
 
 const Page = () => {
+
+  // get and set Points
+
+  
+
   const value = 5115
 
   const [farmButton, setfarmButton] = useState(true)
