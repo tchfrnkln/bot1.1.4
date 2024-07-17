@@ -1,7 +1,7 @@
 import React from 'react'
 import Navigation from '@/components/NavBar/Navigation'
 
-import Family from "../../../assets/image/family.png"
+import Family from "../../../assets/image/family.svg"
 import Fren from "../../../assets/image/freindSm.png"
 import Image from 'next/image'
 
@@ -11,7 +11,7 @@ const page = () => {
         
       <div className='flex-center w-full max-w-[300px]'>
         <div className='py-6 flex-center'>
-          <Image src={Family} alt='invite frens'/>
+          <Image src={Family} alt='invite frens' width={40} className='py-2 rounded-full'/>
           <p className='text-2xl font-[600]'>Invite Frens</p>
         </div>
         <div className='w-full border-[3px] rounded-[10px] border-gray-800 p-6 flex-center gap-2'>
