@@ -6,6 +6,7 @@ import { Root } from '@/components/Root/Root';
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import 'normalize.css/normalize.css';
 import './_assets/globals.css';
+import "../styles/tailwind.css"
 
 export const metadata: Metadata = {
   title: 'Mine CSTZ',
