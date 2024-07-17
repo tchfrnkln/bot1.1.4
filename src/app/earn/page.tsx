@@ -75,18 +75,25 @@ const Page = () => {
   const specificEndTime = new Date().getTime() + 7 * 60 * 60 * 1000;
 
   return (
-    <div className='contentFrame'>
-      <svg id="cart" stroke="orange" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.68 80.75">
+    <div className='flex-center h-screen'>
+      <svg id="cart" stroke="orange" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.4 81.3" fill='green'>
         <title>mine CSTZ</title>
-        <rect className="box" id="box1" x="28" y="22" width="24" height="24" fill="#99cc33" stroke="white" strokeWidth="2"/>
-        <rect className="box" id="box2" x="50" y="22" width="22" height="22" fill="#3399cc" stroke="white" strokeWidth="2"/>
-        <rect className="box" id="box3" x="40" y="8" width="18" height="18" fill="#cc3399" stroke="white" strokeWidth="2"/>
+        <rect className="box" id="box1" x="28" y="22" width="24" height="24" fill="#99cc33" stroke="white" strokeWidth="1"/>
+        <rect className="box" id="box2" x="50" y="22" width="22" height="22" fill="#3399cc" stroke="white" strokeWidth="1"/>
+        <rect className="box" id="box3" x="40" y="8" width="18" height="18" fill="#cc3399" stroke="white" strokeWidth="1"/>
         <path d="M95.34,94,31.42,89.36,29,75.25H10.66v4h15L35.5,137a9.82,9.82,0,1,0,11.35,3.36h29.4a9.8,9.8,0,1,0,7.89-4H39.44l-1.5-8.73H86.11ZM44.77,146.16a5.81,5.81,0,1,1-5.8-5.82h0A5.82,5.82,0,0,1,44.77,146.16Zm45.17,0a5.81,5.81,0,1,1-5.81-5.81h0A5.82,5.82,0,0,1,89.94,146.16ZM37.26,123.61,32.12,93.43l58.07,4.18-7.13,26Z" transform="translate(-10.66 -75.25)"/>
       </svg>
-      <h1>{value.toLocaleString()}</h1>
 
 
-      {farmButton ? <Button color='black' onClick={()=> startFarmingCSTZ()}>Start Farming</Button> : <div className='farmButton'><CountdownTimer endTime={specificEndTime}/></div>}
+      <div className='text-2xl py-4 font-[600] flex-center gap-1'>
+        <p>{value.toLocaleString()}</p>
+        <p className='text-xs'>CSTZ</p>
+      </div>
+
+
+      <div className='flex-center py-4 w-full max-w-[250px] m-3'>
+        {farmButton ? <Button onClick={()=> startFarmingCSTZ()}>Start Farming</Button> : <div className='flex-center bg-gray-700 text-gray-400 text-xs font-[600] p-3 rounded-lg w-full cursor-pointer'><CountdownTimer endTime={specificEndTime}/></div>}
+      </div>
 
       <Navigation/>
     </div>
