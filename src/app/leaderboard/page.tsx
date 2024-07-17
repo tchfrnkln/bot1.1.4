@@ -7,10 +7,10 @@ import Wall from "../../../assets/image/walloffame.png"
 const page = () => {
   return (
     <div className='flex-center'>
-        <div className='flex-center w-full max-w-[300px] p-6'>
-          <Image alt='cstz' src={Wall}/>
+        <div className='flex-center w-full max-w-[300px] py-6'>
           <h1 className='text-xl font-[600] text-center'>Telegram Wall of Fame</h1>
-          <div className='w-full'>
+          <Image alt='cstz' src={Wall}/>
+          <div className='w-full py-2'>
             <div className="flex-center flex-row justify-between w-full py-4">
               <div>
                 <p>Wadzibell</p>

@@ -11,12 +11,12 @@ const page = () => {
         
       <div className='flex-center w-full max-w-[300px]'>
         <div className='py-6 flex-center'>
-          <Image src={Family} alt='invite frens' width={50}/>
+          <Image src={Family} alt='invite frens'/>
           <p className='text-2xl font-[600]'>Invite Frens</p>
         </div>
-        <div className='w-full border-[3px] rounded-[10px] border-gray-800 p-6 flex-center'>
+        <div className='w-full border-[3px] rounded-[10px] border-gray-800 p-6 flex-center gap-2'>
           <p className='font-[600] text-2xl'>10</p>
-          <div className='text-center p-2 rounded-full text-xs bg-gray-800 px-2 cursor-pointer'>Claim in 6hrs 3min</div>
+          <div className='text-center rounded-full text-xs bg-gray-800 p-4 cursor-pointer'>Claim in 6hrs 3min</div>
         </div>
         <div className='flex-center py-6 w-full'>
           <p className='text-[12px] font-[600] text-left w-full pb-[10px]'>2 frens</p>

@@ -76,7 +76,7 @@ const Page = () => {
 
   return (
     <div className='flex-center h-screen'>
-      <svg id="cart" stroke="orange" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.4 81.3" fill='green'>
+      <svg id="cart" stroke="orange" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.4 81.3">
         <title>mine CSTZ</title>
         <rect className="box" id="box1" x="28" y="22" width="24" height="24" fill="#99cc33" stroke="white" strokeWidth="1"/>
         <rect className="box" id="box2" x="50" y="22" width="22" height="22" fill="#3399cc" stroke="white" strokeWidth="1"/>
