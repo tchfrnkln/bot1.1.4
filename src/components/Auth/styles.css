@@ -14,10 +14,9 @@
 .button{
     width: 70%;
     max-width: 300px;
-    padding: 15px 10px;
     border-radius: 8px;
     color: white;
-    border: 2px solid orange;
+    border: 1.5px solid orange;
     text-decoration: none;
     text-align: center;
     font: 1.1rem bold;
@@ -26,3 +25,12 @@
 .button:hover{
     border-color: rgb(190, 124, 1);
 }
+
+.spinnerSM {
+    width: 20px;
+    height: 20px;
+    border: 4px solid rgb(118, 194, 220);
+    border-top: 4px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+  }
