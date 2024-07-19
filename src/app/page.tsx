@@ -12,15 +12,10 @@ export default function Home() {
   const {loading, updateUserState} = userState()  
 
 
-  const addRows = async () => {
+  const updateRows = async () => {
     if (loading) return false;
     updateUserState("loading", true);
-  
     const userId = initData?.user?.username;
-    const userIdMain = initData?.user?.id;
-
-    console.log("userIdMain ", userIdMain);
-    
   
     try {
       // Check if the user already exists
@@ -32,7 +27,7 @@ export default function Home() {
   
       if (checkError && checkError.code !== 'PGRST116') {
         // Handle error other than not found (PGRST116 is the code for no row returned)
-        console.error('Error checking user existence:', checkError.message);
+        console.log('Error checking user existence:', checkError.message);
         updateUserState("loading", false);
         return;
       }
@@ -41,35 +36,22 @@ export default function Home() {
         // User already exists
         console.log('User already exists:', existingUser);
         router.push('/earn');
-        updateUserState("loading", false);
-        return;
-      }
-  
-      // User does not exist, proceed with insertion
-      const { data, error } = await supabase
-        .from('mine-cstz')
-        .insert([
-          { userId, points: 10000, earnTime: 0, frenTime: 0, uplineFren: 1000 },
-        ])
-        .select();
-  
-      if (error) {
-        console.error('Error inserting user:', error.message);
-      } else {
-        console.log('User inserted:', data);
-        router.push('/earn');
+        // updateUserState("loading", false);
+        // return;
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error('Unexpected error:', error.message);
+        console.log('Unexpected error:', error.message);
       }
     } finally {
-      updateUserState("loading", false);
+      setTimeout(() => {
+        updateUserState("loading", false);
+      }, 2000);
     }
   };
   
 
   return (
-    <LoginUser user={initData?.user?.username} to={() => addRows()}/>
+    <LoginUser user={initData?.user?.username} to={() => updateRows()}/>
   );
 }
