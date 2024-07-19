@@ -17,6 +17,10 @@ export default function Home() {
     updateUserState("loading", true);
   
     const userId = initData?.user?.username;
+    const userIdMain = initData?.user?.id;
+
+    console.log("userIdMain ", userIdMain);
+    
   
     try {
       // Check if the user already exists
