@@ -18,7 +18,7 @@ export default function Home() {
     const { data, error } = await supabase
     .from('mine-cstz')
     .insert([
-      { userId: initData?.user?.id,  points: 10000, earnTime: 0, frenTime:0, uplineFren:1000},
+      { userId: initData?.user?.username,  points: 10000, earnTime: 0, frenTime:0, uplineFren:1000},
     ])
     .select()
 
