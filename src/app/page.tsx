@@ -35,6 +35,7 @@ export default function Home() {
       if (existingUser) {
         // User already exists
         console.log('User already exists:', existingUser);
+        checkEarntime(userId)
         router.push('/earn');
         // updateUserState("loading", false);
         // return;
@@ -46,9 +47,25 @@ export default function Home() {
     } finally {
       setTimeout(() => {
         updateUserState("loading", false);
-      }, 2000);
+      }, 5000);
     }
   };
+
+  const checkEarntime = async (userId:string | undefined) => {
+    const { data, error } = await supabase
+      .from('mine-cstz')
+      .select('earnTime')
+      .eq('userId', userId)
+      .single();
+  
+    if (error) {
+      console.error('Error fetching points:', error.message);
+      return null;
+    }
+  
+    data && updateUserState("earnTime", data.earnTime)  
+  };
+
   
 
   return (

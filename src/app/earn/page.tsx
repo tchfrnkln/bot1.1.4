@@ -4,20 +4,24 @@ import React, { useEffect, useState } from 'react'
 import "./style.css"
 import { Button } from '@telegram-apps/telegram-ui'
 import { gsap, Back, Bounce } from "gsap"
-import CountdownTimer from '@/components/countdown/Timer'
+import CountdownTimer, { calculateSecondsDifference } from '@/components/countdown/Timer'
 import { useInitData } from '@tma.js/sdk-react'
 import { supabase } from '@/utils/supabase'
+import { userState } from '@/zustand/state'
 
 const Page = () => {
 
   const [value, setvalue] = useState(0)
+  const [claim, setclaim] = useState(false)
+  
+  const {earnTime, updateUserState} = userState()
 
   const initData = useInitData();
 
   const fetchGamePoints = async (userId:string | undefined) => {
     const { data, error } = await supabase
       .from('mine-cstz')
-      .select('points')
+      .select('points, earnTime')
       .eq('userId', userId)
       .single();
   
@@ -25,13 +29,19 @@ const Page = () => {
       console.error('Error fetching points:', error.message);
       return null;
     }
-  
-    data ? setvalue(data.points) : setvalue(0)
+
     
-    // return data ? data.points : null;
+    if(data){
+      setvalue(data.points)
+      updateUserState("earnTime", data.earnTime)
+
+      const timeNow = new Date().getTime()
+      const timeLeft = calculateSecondsDifference(data.earnTime, timeNow)
+      timeLeft < 0 && setclaim(true)
+    }
   };
 
-  const [farmButton, setfarmButton] = useState(true)
+  // const [farmButton, setfarmButton] = useState(true)
 
   const animateBoxes = () => {
     const tl = gsap.timeline();
@@ -77,7 +87,6 @@ const Page = () => {
     }, 'last-=0.25');
   };
 
-  // const userId = initData?.user?.username
   useEffect(() => {
     const userId = initData?.user?.username;
 
@@ -89,11 +98,39 @@ const Page = () => {
     return () => clearInterval(interval);
   }, [initData]);
 
-  const startFarmingCSTZ = () =>{
-    setfarmButton(!farmButton)
+  const startFarmingCSTZ = async() =>{
+    const sevenHours = new Date().getTime() + 60 *1000;
+    // const sevenHours = new Date().getTime() + 7 * 60 * 60 * 1000;
+    const { data, error } = await supabase
+    .from('mine-cstz')
+    .update({ earnTime: sevenHours })
+    .eq('userId', initData?.user?.username);
+
+    if (error) {
+      console.error('Error updating earnTime:', error.message);
+      return null;
+    }
+
+    updateUserState("earnTime", sevenHours)
   }
 
-  const specificEndTime = new Date().getTime() + 7 * 60 * 60 * 1000;
+  const claimCSTZ = async() =>{
+    console.log("claim Time");
+    const newValue = value + 5000
+    const { data, error } = await supabase
+    .from('mine-cstz')
+    .update({ points: newValue ,earnTime: 0 })
+    .eq('userId', initData?.user?.username);
+
+    if (error) {
+      console.error('Error claiming CSTZ:', error.message);
+      return null;
+    }
+
+    setvalue(newValue)
+    updateUserState("earnTime", 0)
+    setclaim(false)
+  }
 
   return (
     <div className='flex-center h-screen'>
@@ -113,7 +150,7 @@ const Page = () => {
 
 
       <div className='flex-center py-4 w-full max-w-[250px] m-3'>
-        {farmButton ? <Button onClick={()=> startFarmingCSTZ()}>Start Farming</Button> : <div className='flex-center bg-gray-700 text-gray-400 text-xs font-[600] p-3 rounded-lg w-full cursor-pointer'><CountdownTimer endTime={specificEndTime}/></div>}
+        {earnTime === 0 ? <div>{claim ? <Button onClick={()=> claimCSTZ()}>Claim</Button> : <Button onClick={()=> startFarmingCSTZ()}>Start Farming</Button> }</div> : <div className='flex-center bg-gray-700 text-gray-400 text-xs font-[600] p-3 rounded-lg w-full cursor-pointer'><CountdownTimer endTime={earnTime}/></div>}
       </div>
 
       <Navigation/>

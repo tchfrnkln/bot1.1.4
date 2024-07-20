@@ -6,6 +6,7 @@ interface CountdownTimerProps {
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime }) => {
+
   const calculateTimeLeft = (endTime: number) => {
     const now = new Date().getTime();
     const distance = endTime - now;
@@ -31,6 +32,8 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime }) => {
         clearInterval(timer);
       }
       setTimeLeft(newTimeLeft);
+      console.log("newTimeLeft", newTimeLeft.seconds);
+      console.log(newTimeLeft.seconds > 0);
     }, 1000);
 
     return () => clearInterval(timer);
@@ -43,6 +46,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime }) => {
       </div>
     </div>
   );
+};
+
+
+export const calculateSecondsDifference = (time1:number, time2:number) => {
+  const differenceInMilliseconds = time1 - time2;
+  const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);
+  return differenceInSeconds;
 };
 
 export default CountdownTimer;
