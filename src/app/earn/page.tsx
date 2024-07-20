@@ -14,7 +14,7 @@ const Page = () => {
   const [value, setvalue] = useState(0)
   const [claim, setclaim] = useState(false)
   
-  const {earnTime, updateUserState} = userState()
+  const {claimable, earnTime, updateUserState} = userState()
 
   const initData = useInitData();
 
@@ -37,7 +37,9 @@ const Page = () => {
 
       const timeNow = new Date().getTime()
       const timeLeft = calculateSecondsDifference(data.earnTime, timeNow)
-      timeLeft < 0 && setclaim(true)
+      console.log("time Left", timeLeft);
+      
+      timeLeft < 0 && updateUserState("claimable", false)
     }
   };
 
@@ -129,7 +131,7 @@ const Page = () => {
 
     setvalue(newValue)
     updateUserState("earnTime", 0)
-    setclaim(false)
+    updateUserState("claimable", false)
   }
 
   return (
@@ -150,7 +152,7 @@ const Page = () => {
 
 
       <div className='flex-center py-4 w-full max-w-[250px] m-3'>
-        {earnTime === 0 ? <div>{claim ? <Button onClick={()=> claimCSTZ()}>Claim</Button> : <Button onClick={()=> startFarmingCSTZ()}>Start Farming</Button> }</div> : <div className='flex-center bg-gray-700 text-gray-400 text-xs font-[600] p-3 rounded-lg w-full cursor-pointer'><CountdownTimer endTime={earnTime}/></div>}
+        {earnTime === 0 ? <div>{claimable ? <Button onClick={()=> claimCSTZ()}>Claim Time</Button> : <Button onClick={()=> startFarmingCSTZ()}>Start Farming</Button> }</div> : <div className='flex-center bg-gray-700 text-gray-400 text-xs font-[600] p-3 rounded-lg w-full cursor-pointer'><CountdownTimer endTime={earnTime}/></div>}
       </div>
 
       <Navigation/>

@@ -1,4 +1,5 @@
 // components/CountdownTimer.tsx
+import { userState } from '@/zustand/state';
 import { useEffect, useState } from 'react';
 
 interface CountdownTimerProps {
@@ -6,6 +7,7 @@ interface CountdownTimerProps {
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime }) => {
+  const {updateUserState} = userState()
 
   const calculateTimeLeft = (endTime: number) => {
     const now = new Date().getTime();
@@ -32,8 +34,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime }) => {
         clearInterval(timer);
       }
       setTimeLeft(newTimeLeft);
-      console.log("newTimeLeft", newTimeLeft.seconds);
-      console.log(newTimeLeft.seconds > 0);
+      newTimeLeft.seconds < 0 && updateUserState("claimable", false)
     }, 1000);
 
     return () => clearInterval(timer);
