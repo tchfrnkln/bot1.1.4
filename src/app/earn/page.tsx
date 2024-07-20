@@ -2,17 +2,34 @@
 import Navigation from '@/components/NavBar/Navigation'
 import React, { useEffect, useState } from 'react'
 import "./style.css"
-import { Button, ButtonCell } from '@telegram-apps/telegram-ui'
+import { Button } from '@telegram-apps/telegram-ui'
 import { gsap, Back, Bounce } from "gsap"
 import CountdownTimer from '@/components/countdown/Timer'
+import { useInitData } from '@tma.js/sdk-react'
+import { supabase } from '@/utils/supabase'
 
 const Page = () => {
 
-  // get and set Points
+  const [value, setvalue] = useState(0)
 
+  const initData = useInitData();
+
+  const fetchGamePoints = async (userId:string | undefined) => {
+    const { data, error } = await supabase
+      .from('mine-cstz')
+      .select('points')
+      .eq('userId', userId)
+      .single();
   
-
-  const value = 5115
+    if (error) {
+      console.error('Error fetching points:', error.message);
+      return null;
+    }
+  
+    data ? setvalue(data.points) : setvalue(0)
+    
+    // return data ? data.points : null;
+  };
 
   const [farmButton, setfarmButton] = useState(true)
 
@@ -60,13 +77,17 @@ const Page = () => {
     }, 'last-=0.25');
   };
 
+  // const userId = initData?.user?.username
   useEffect(() => {
+    const userId = initData?.user?.username;
+
     animateBoxes();
+    fetchGamePoints(userId)
     const interval = setInterval(() => {
       animateBoxes();
     }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [initData]);
 
   const startFarmingCSTZ = () =>{
     setfarmButton(!farmButton)
