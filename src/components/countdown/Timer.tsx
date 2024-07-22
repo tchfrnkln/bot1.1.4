@@ -34,7 +34,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime }) => {
         clearInterval(timer);
       }
       setTimeLeft(newTimeLeft);
-      newTimeLeft.seconds < 0 && updateUserState("claimable", false)
+      newTimeLeft.seconds < 0 && updateUserState("claimable", true)
     }, 1000);
 
     return () => clearInterval(timer);
