@@ -9,42 +9,14 @@ import { useInitData } from '@tma.js/sdk-react'
 import { supabase } from '@/utils/supabase'
 import { userState } from '@/zustand/state'
 
-const Page = () => {
 
-  const [value, setvalue] = useState(0)
+
+const Page = () => {
   const [waitTime, setwaitTime] = useState(true)
   
-  const {claimable, earnTime, updateUserState} = userState()
+  const {claimable, earnTime, pointsValue, updateUserState} = userState()
 
   const initData = useInitData();
-
-  const fetchGamePoints = async (userId:string | undefined) => {
-    const { data, error } = await supabase
-      .from('mine-cstz')
-      .select('points, earnTime')
-      .eq('userId', userId)
-      .single();
-  
-    if (error) {
-      console.error('Error fetching points:', error.message);
-      return null;
-    }
-
-    
-    if(data){
-      setvalue(data.points)
-      updateUserState("earnTime", data.earnTime)
-
-
-
-      const timeNow = new Date().getTime()
-      const timeLeft = calculateSecondsDifference(data.earnTime, timeNow)
-      console.log("time Left", timeLeft);
-      console.log(timeLeft < 0);
-      
-      timeLeft < 0 && updateUserState("claimable", true)
-    }
-  };
 
   // const [farmButton, setfarmButton] = useState(true)
 
@@ -92,6 +64,34 @@ const Page = () => {
     }, 'last-=0.25');
   };
 
+  const fetchGamePoints = async (userId:string | undefined) => {
+  
+    const { data, error } = await supabase
+      .from('mine-cstz')
+      .select('points, earnTime, frenTime')
+      .eq('userId', userId)
+      .single();
+  
+    if (error) {
+      console.error('Error fetching points:', error.message);
+      return null;
+    }
+  
+    
+    if(data){
+      updateUserState("pointsValue", data.points)
+      updateUserState("earnTime", data.earnTime)
+      updateUserState("frenTime", data.frenTime)
+  
+      const timeNow = new Date().getTime()
+      const timeLeft = calculateSecondsDifference(data.earnTime, timeNow)
+      const timeLeftFren = calculateSecondsDifference(data.frenTime, timeNow)
+      
+      timeLeft < 0 && updateUserState("claimable", true)
+      timeLeftFren < 0 && updateUserState("claimableFren", true)
+    }
+  };
+
   useEffect(() => {
     const userId = initData?.user?.username;
 
@@ -122,8 +122,7 @@ const Page = () => {
   }
 
   const claimCSTZ = async() =>{
-    console.log("claim Time");
-    const newValue = value + 5000
+    const newValue = pointsValue + 5000
     const { data, error } = await supabase
     .from('mine-cstz')
     .update({ points: newValue ,earnTime: 0 })
@@ -135,7 +134,7 @@ const Page = () => {
     }
 
     setwaitTime(false)
-    setvalue(newValue)
+    updateUserState("pointsValue", newValue)
     updateUserState("earnTime", 0)
     updateUserState("claimable", false)
   }
@@ -152,7 +151,7 @@ const Page = () => {
 
 
       <div className='text-2xl py-4 font-[600] flex-center gap-1'>
-        <p>{value.toLocaleString()}</p>
+        <p>{pointsValue.toLocaleString()}</p>
         <p className='text-xs'>CSTZ</p>
       </div>
 
