@@ -16,7 +16,7 @@ const Navigation = () => {
         {key:2, name:"Friends", icon:Friends, to:"/friends"},
     ]
   return (
-    <div className='body'>
+    <div className='body z-10 flex-center bg-black'>
         {
             navContent.map(nav =>(
                 <Link href={nav.to} key={nav.key} className='contentFrame'>
