@@ -93,16 +93,18 @@ const Page = () => {
             </div>
             <p className='text-[12px] font-[600] text-left w-full pb-[10px]'>{`${holders.toLocaleString()} holders`}</p>
           </div>
-          {topUsers.map((top) =>(
-            <div key={top.id} className="flex-center flex-row justify-between w-full py-4">
-              <div>
-                <p>{top.userId}</p>
-                <p className='text-gray-400 text-xs font-[600]'>{`${top.points.toLocaleString()} CSTZ`}</p>
+          <div className='max-h-[300px] overflow-y-scroll w-full'>
+            {topUsers.map((top) =>(
+              <div key={top.id} className="flex-center flex-row justify-between w-full py-4">
+                <div>
+                  <p>{top.userId}</p>
+                  <p className='text-gray-400 text-xs font-[600]'>{`${top.points.toLocaleString()} CSTZ`}</p>
+                </div>
+                <p className="font-bold">{`#${topUsers.findIndex(user => user.userId === top.userId) + 1}`}</p>
               </div>
-              <p className="font-bold">{`#${topUsers.findIndex(user => user.userId === top.userId) + 1}`}</p>
-            </div>
-          )) 
-          }
+            )) 
+            }
+          </div>
         </div>
 
         <Navigation/>
