@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface UserState {
-  topUsers:{id:number, userId:string, points:number}[],
+  topUsers:{id:number, userId:string, points:number, position:number}[],
   pointsValue: number
   earnTime: number
   frenTime: number

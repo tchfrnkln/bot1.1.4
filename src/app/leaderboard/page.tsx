@@ -59,16 +59,20 @@ const Page = () => {
 
 
     const { data: topUsersData, error: topUsersError } = await supabase
-      .from('mine-cstz')
-      .select('userId, points, id')
-      .order('points', { ascending: false })
-      .limit(20);
-
+    .from('mine-cstz')
+    .select('userId, points, id')
+    .order('points', { ascending: false })
+    .limit(20);
+  
     if (topUsersError) {
       console.error('Error fetching top users:', topUsersError);
     } else {
-      updateUserState("topUsers", topUsersData)
-    }
+      const topUsersWithPosition = topUsersData.map((user, index) => ({
+        ...user,
+        position: index + 1
+      }));
+      updateUserState("topUsers", topUsersWithPosition);
+    }  
     
   }  
 
@@ -100,7 +104,7 @@ const Page = () => {
                   <p>{top.userId}</p>
                   <p className='text-gray-400 text-xs font-[600]'>{`${top.points.toLocaleString()} CSTZ`}</p>
                 </div>
-                <p className="font-bold">{`#${topUsers.findIndex(user => user.userId === top.userId) + 1}`}</p>
+                <p className="font-bold">{`#${top.position}`}</p>
               </div>
             )) 
             }
