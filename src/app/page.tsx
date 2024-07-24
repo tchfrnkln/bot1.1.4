@@ -36,6 +36,7 @@ export default function Home() {
         // User already exists
         console.log('User already exists:', existingUser);
         checkEarntime(userId)
+        updateUserState("loading", false);
         router.push('/earn');
         // updateUserState("loading", false);
         // return;
@@ -44,10 +45,6 @@ export default function Home() {
       if (error instanceof Error) {
         console.log('Unexpected error:', error.message);
       }
-    } finally {
-      setTimeout(() => {
-        updateUserState("loading", false);
-      }, 5000);
     }
   };
 
